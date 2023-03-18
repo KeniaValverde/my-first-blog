@@ -118,3 +118,16 @@ python manage.py createsuperuser (estos lo corremos en la consola dentro del vir
 username: Kerberos
 correo: kenia.valverde@outlook.com
 contraseña: Lamama123$$kjhd5
+
+
+git remote add origin git@github.com:KeniaValverde/my-first-blog.git
+
+
+Conectar a Python Anywhere
+actualizar el pip primero
+python.exe -m pip install --upgrade pip
+instalar Python Anywhere
+correr esto dentro de python anywhere en la consola
+pip install --user pythonanywhere
+
+pa_autoconfigure_django.py --python=3.11 git@github.com:KeniaValverde/my-first-blog.git

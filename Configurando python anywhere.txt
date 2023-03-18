@@ -1,0 +1,21 @@
+actualizar pip desde la consola
+python -m pip install --upgrade pip
+
+
+actualizar python anywhere
+pip3.10 install --user pythonanywhere
+
+
+Clonar el repo en la consola
+pa_autoconfigure_django.py --python=3.10 https://github.com/KeniaValverde/my-first-blog.git
+
+sino funciona hay que especificar el branch
+pa_autoconfigure_django.py --python=3.10 https://github.com/KeniaValverde/my-first-blog.git --branch=master
+
+
+crear el usuario administrador en la base de datos
+python manage.py createsuperuser
+username: Kerberos
+correo: kenia.valverde@outlook.com
+contraseña: Lamama123$$kjhd5
+

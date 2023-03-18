@@ -1,0 +1,9 @@
+Crear el blog
+
+Creemos una vista (view) 
+def post_list(request):
+    return render(request, 'blog/post_list.html', {})
+
+ir a la pagina  http://127.0.0.1:8000/
+va a generar un error TemplateDoesNotExist. Porque aun no hemos creado el archivo post_list.html
+
