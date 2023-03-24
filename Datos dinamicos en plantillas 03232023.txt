@@ -1,0 +1,61 @@
+23/03/2023
+
+Datos dinámicos en plantillas
+
+Tenemos diferentes piezas en su lugar: el modelo Post está definido en models.py, tenemos a post_list en views.py y la plantilla agregada.
+
+Para que los posts aparezcan en nuestro HTML
+
+Tenemos que abrir blog/views.py en el editor. De momento post_list view tiene esto:
+
+from django.shortcuts import render
+
+def post_list(request):
+    return render(request, 'blog/post_list.html', {})
+
+Ahora tenemos que incluir el modelo que definimos en el archivo models.py. Agregaremos la línea from .models import Post de la siguiente forma:
+
+from django.shortcuts import render
+from .models import Post
+
+El punto antes de models indica el directorio actual o la aplicación actual. Ambos, views.py y models.py están en el mismo directorio. Esto significa que podemos utilizar . y el nombre del archivo (sin .py). Ahora importamos el nombre del modelo (Post).
+
+Para tomar posts reales del modelo Post, necesitamos algo llamado QuerySet.
+
+_____________________________________________________________
+
+QuerySet
+
+Así que ahora nos interesa tener una lista de post publicados ordenados por published_date (fecha de publicación), Ya lo hicimos en el capítulo QuerySets!
+
+blog/views.py
+Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+
+
+Abre blog/views.py en el editor, y añade este trozo de código a la función def post_list(request) -- pero no te olvides de añadir from django.utils import timezone antes:
+
+blog/views.py
+from django.shortcuts import render
+from django.utils import timezone
+from .models import Post
+
+def post_list(request):
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    return render(request, 'blog/post_list.html', {})
+
+La última parte es pasar el QuerySet posts a la plantilla context. No te preocupes, enseñaremos cómo mostrarlo más adelante.
+
+Fíjate en que creamos una variable para el QuerySet: posts. Trátala como si fuera el nombre de nuestro QuerySet. De aquí en adelante vamos a referirnos al QuerySet con ese nombre.
+
+En la función render tenemos el parámetro request (todo lo que recibimos del usuario via Internet) y otro parámetro dándole el archivo de la plantilla ('blog/post_list.html'). El último parámetro, que se ve así: {} es un lugar en el que podemos agregar algunas cosas para que la plantilla las use. Necesitamos nombrarlos (los seguiremos llamando 'posts' por ahora). :) Se debería ver así: {'posts': posts}. Fíjate en que la parte antes de : es una cadena; tienes que envolverla con comillas: ".
+
+Finalmente nuestro archivo blog/views.py debería verse así:
+
+blog/views.py
+from django.shortcuts import render
+from django.utils import timezone
+from .models import Post
+
+def post_list(request):
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    return render(request, 'blog/post_list.html', {'po

@@ -1,0 +1,97 @@
+22/03/2023
+
+QuerySet = - Lista objetos de un modelo determinado
+	     - Permite leer datos de la base de datos, filtrarlos y ordenarlos
+
+Django shell
+(myvenv) ~/djangogirls$ python manage.py shell
+
+Para poder ejecutar este comando primero tenemos que activar nuestro entorno virtual
+myvenv\Scripts\activate
+
+Vamos a improtar el Post
+from blog.models import Post
+
+Y ahora vamos a mostrar todos los post
+Post.objects.all()
+________________________________________________
+
+Crear objetos
+
+Para crear objetos primero tenemos que importar el modelo user porque es un dato que va a contener
+Primero importemos el modelo User:
+
+command-line
+>>> from django.contrib.auth.models import User
+
+Vamos a consultar en la base de datos que usurios tenemos registrados
+User.objects.all()
+
+vamos a obtener una instancia de este usuario (cambia el código para usar tu propio nombre de usuario):
+>>> me = User.objects.get(username='ola')
+
+Vamos a crear un nuevo Post en la base de datos
+Post.objects.create(author=me, title='Sample title', text='Test')
+
+probar si funcionó
+Post.objects.all()
+
+Agrega más entradas
+Post.objects.create(author=me, title='Sample title2', text='Test2')
+Post.objects.create(author=me, title='Sample title3', text='Test3')
+
+Vamos a filtrar los post escritos por el author "me"
+
+>>> Post.objects.filter(author=me)
+
+
+¿O quizá queremos ver todas las entradas que contengan la palabra 'title' en el campo title?
+>>> Post.objects.filter(title__contains='title')
+
+Nota Hay dos guiones bajos (_) entre title y contains. El ORM de Django utiliza esta sintaxis para separar los nombres de los campos ("title") de las operaciones o filtros ("contains"). Si sólo utilizas un guion bajo, obtendrás un error como "FieldError: Cannot resolve keyword title_contains".
+
+También puedes obtener una lista de todos los post publicados.
+>>> from django.utils import timezone
+>>> Post.objects.filter(published_date__lte=timezone.now())
+
+Primero obtén una instancia de la entrada que queremos publicar:
+post = Post.objects.get(title="Sample title")
+
+Y luego publícala con nuestro método publish:
+
+command-line
+>>> post.publish()
+Ahora vuelve a intentar obtener la lista de posts publicados (pulsa la tecla de "flecha arriba" tres veces y pulsa enter):
+
+command-line
+>>> Post.objects.filter(published_date__lte=timezone.now())
+____________________________________________________
+
+Ordenar objetos
+
+Los QuerySets también te permiten ordenar la lista de objetos. Intentemos ordenarlos por el campo created_date:
+
+command-line
+>>> Post.objects.order_by('created_date')
+<QuerySet [<Post: Sample title>, <Post: Post number 2>, <Post: My 3rd post!>, <Post: 4th title of post>]>
+
+También podemos invertir el orden agregando - al principio:
+
+command-line
+>>> Post.objects.order_by('-created_date')
+<QuerySet [<Post: 4th title of post>,  <Post: My 3rd post!>, <Post: Post number 2>, <Post: Sample title>]>
+
+
+Consultas complejas a través de encadenamiento de métodos
+Como ves, algunos métodos en Post.objects devuelven un QuerySet. Los mismos métodos pueden ser llamados también en un QuerySet, y entonces devolverán un nuevo QuerySet. También puedes combinar QuerySets encadenando uno con otro:
+
+>>> Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+<QuerySet [<Post: Post number 2>, <Post: My 3rd post!>, 
+
+
+
+Para cerrar la consola, escribe esto:
+
+command-line
+>>> exit()
+$

@@ -63,3 +63,28 @@ ejemplo de plantilla completa
     </body>
 </html>
 
+Haz commit, y sube tu código a GitHub
+
+verificamos lo que tenemos que subir
+$ git status
+agregamos los archivos para subirlos
+$ git add --all .
+verificamos que los archivos esten en color verde osea listos para subirlos
+$ git status
+hacemos commit y le ponemos el nombre del cambio
+$ git commit -m "Cambie el HTML para la página."
+Subir o enviar los cambios a github con push y establecemos a que rama
+git push origin master
+
+Descarga tu nuevo código a PythonAnywhere y actualiza tu aplicación web
+
+PythonAnywhere command-line
+$ cd ~/<your-pythonanywhere-domain>.pythonanywhere.com
+$ git pull
+[...]
+
+como yo lo hice
+
+00:16 ~ $ cd "keniavalverde.pythonanywhere.com"
+00:16 ~/keniavalverde.pythonanywhere.com (master)$ 
+00:17 ~/keniavalverde.pythonanywhere.com (master)$ git pull
