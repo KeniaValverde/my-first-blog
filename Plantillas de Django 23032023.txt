@@ -27,3 +27,37 @@ Significa que Django lo entiende como una lista de objetos. ¿Recuerdas de Intro
 blog/templates/blog/post_list.html
 {% for post in posts %} {{ post }}{% endfor %}
 
+Pero queremos que se muestren como los post estáticos que creamos anteriormente en el capítulo de Introducción a HTML. Usted puede mezclar HTML y etiquetas de plantilla. Nuestro body se verá así:
+
+blog/templates/blog/post_list.html
+<div>
+    <h1><a href="/">Django Girls Blog</a></h1>
+</div>
+
+{% for post in posts %}
+    <div>
+        <p> publicado: {{ post.published_date }}</p>
+        <h2><a href="">{{ post.title }}</a></h2>
+        <p>{{ post.text|linebreaksbr }}</p>
+    </div>
+{% endfor %}
+
+¿Has notado que utilizamos una notación diferente esta vez ({{ post.title }} o {{ post.text }})? Estamos accediendo a los datos en cada uno de los campos definidos en nuestro modelo Post. También el |linebreaksbr está pasando el texto de los post a través de un filtro para convertir saltos de línea en párrafos.
+
+Lo primero, sube tu código a GitHub
+command-line
+$ git status
+[...]
+$ git add --all .
+$ git status
+[...]
+$ git commit -m "Templates modificados para mostrar post desde base de datos."
+[...]
+$ git push
+Luego, vuelve a entrar en PythonAnywhere y ve a tu consola Bash (o inicia una nueva), y ejecuta:
+PythonAnywhere command-line
+$ cd <your-pythonanywhere-domain>.pythonanywhere.com
+$ git pull
+[...]
+
+Ahora intenta añadir un nuevo post en tu administrador de Django (recuerda añadir published_date!) Asegúrate de que estás en el administrador de Django de PytonAnywhere, https://tunombre.pythonanywhere.com/admin. Luego actualiza tu página para ver si los posts aparecen.

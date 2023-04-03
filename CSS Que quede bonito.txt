@@ -1,0 +1,82 @@
+¿Qué es CSS?
+El lenguaje CSS (las siglas en inglés de Hojas de Estilos en Cascada, o Cascading Style Sheets) sirve para describir la apariencia de un sitio web escrito en un lenguaje de marcado (como HTML). Es como la capa de pintura para nuestra página web. ;)
+
+¡Vamos a usar Bootstrap!
+Bootstrap es uno de los frameworks de HTML y CSS más populares para desarrollar sitios web atractivos: https://getbootstrap.com/
+
+Lo escribieron programadores que trabajaban en Twitter. ¡Ahora lo mantienen y desarrollan voluntarios de todo el mundo!
+
+Instalar Bootstrap
+Para instalar Bootstrap, abre tu fichero .html en el editor de código y añade esto a la sección <head>:
+
+blog/templates/blog/post_list.html
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+Esto no añade ningún archivo a tu proyecto. Solo apunta a archivos que existen en Internet. Así que adelante, accede a tu sitio web y refresca la página ¡Aquí la tienes!
+
+Dónde poner los archivos estáticos en Django
+Django ya sabe dónde encontrar los archivos estáticos de la app "admin". Ahora necesitamos añadir los archivos estáticos de nuestra aplicación, blog.
+
+Crearemos una carpeta llamada static dentro de la app blog:
+
+djangogirls
+├── blog
+│   ├── migrations
+│   ├── static
+│   └── templates
+└── mysite
+Django encontrará automáticamente cualquier carpeta llamada "static" dentro de cualquiera de las carpetas de tus apps. Podrá usar su contenido como archivos estáticos.
+
+Vamos a escribir algo de CSS! Abre el archivo blog/static/css/blog.css en el editor de código.
+
+Pero vamos a hacer al menos un poco. ¿Quizás podamos cambiar el color de nuestros encabezados? Los ordenadores utilizan códigos especiales para expresar los colores. Estos códigos empiezan con # seguidos por 6 letras (A-F) y números (0-9). Por ejemplo, el código del color azul es #0000FF. Puedes encontrar los códigos de muchos colores aquí: http://www.colorpicker.com/ y en otras páginas web. También puedes utilizar colores predefinidos utilizando su nombre en inglés, como red y green.
+
+En el archivo blog/static/css/blog.css deberías añadir el siguiente código:
+
+blog/static/css/blog.css
+h1 a, h2 a {
+     color: #C25100;
+}
+
+h1 a es un selector CSS. Esto significa que estamos aplicando nuestros estilos a cualquier elemento de a dentro de un elemento de h1; el selector h2 a hace lo mismo para los elementos de h2. Así, cuando tenemos algo como <h1><a href="">link</a></h1>, se aplicará el estilo h1 a. En este caso, le estamos diciendo que cambie el color a un #C25100, que es un naranjo oscuro. O puedes poner tu propio color aqui, ¡pero asegúrate que tenga un buen contraste contra un fondo blanco!
+
+
+Si quieres aprender más sobre los selectores CSS puedes consultar en Selectores de CSS en w3schools.
+
+También necesitamos decirle a nuestra plantilla HTML que hemos añadido código CSS. Abre el archivo blog/templates/blog/post_list.html en el editor de código y añade esta línea al principio del todo:
+
+blog/templates/blog/post_list.html
+{% load static %}
+Aquí solo estamos cargando archivos estáticos. :) Entre las etiquetas <head> y </head>, después de los enlaces a los archivos CSS de Bootstrap, añade esta línea:
+
+blog/templates/blog/post_list.html
+<link rel="stylesheet" href="{% static 'css/blog.css' 
+
+El navegador lee los archivos en el orden que le son dados, por lo que debemos asegurarnos de que está en el lugar correcto. De lo contrario, el código en nuestro archivo podría ser reemplazado por código en nuestros archivos Bootstrap. Le acabamos de decir a nuestra plantilla dónde se encuentra nuestro archivo CSS.
+
+Ahora tu archivo debe tener este aspecto:
+
+blog/templates/blog/post_list.html
+{% load static %}
+<html>
+    <head>
+        <title>Django Girls blog</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    </head>
+    <body>
+        <div>
+            <h1><a href="/">Django Girls Blog</a></h1>
+        </div>
+
+        {% for post in posts %}
+            <div>
+                <p>published: {{ post.published_date }}</p>
+                <h2><a href="">{{ post.title }}</a></h2>
+                <p>{{ post.text|linebreaksbr }}</p>
+            </div>
+        {% endfor %}
+    </body>
+</html>
+De acuerdo, ¡guarda el archivo y actualiza el sitio!
