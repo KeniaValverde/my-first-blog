@@ -80,3 +80,114 @@ blog/templates/blog/post_list.html
     </body>
 </html>
 De acuerdo, ¡guarda el archivo y actualiza el sitio!
+
+blog/static/css/blog.css
+body {
+    padding-left: 15px;
+}
+
+¿Quizá podríamos personalizar la tipografía del título? Pega esto en la sección <head> del archivo blog/templates/blog/post_list.html:
+
+blog/templates/blog/post_list.html
+<link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+Encuentra el bloque de declaración (el código entre las llaves { y }) h1 a en el archivo CSS blog/static/css/blog.css. Ahora añade la línea font-family: 'Lobster'; entre las llaves y actualiza la página:
+
+blog/static/css/blog.css
+h1 a, h2 a {
+    color: #FCA205;
+    font-family: 'Lobster';
+
+Adelante, nombra algunas partes del código HTML. Añade una clase llamada page-header a tu div que contiene el encabezado, así:
+
+blog/templates/blog/post_list.html
+<div class="page-header">
+    <h1><a href="/">Django Girls Blog</a></h1>
+</div>
+Y ahora añade una clase post a tu div que contiene una publicación del blog.
+
+blog/templates/blog/post_list.html
+<div class="post">
+    <p>publicado: {{ post.published_date }}</p>
+    <h2><a href="">{{ post.title }}</a></h2>
+    <p>{{ post.text|linebreaksbr }}</p>
+</div>
+
+ Por ahora, copia y pega lo siguiente en tu archivo blog/static/css/blog.css:
+
+blog/static/css/blog.css
+.page-header {
+    background-color: #C25100;
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
+}
+
+.page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
+    color: #ffffff;
+    font-size: 36pt;
+    text-decoration: none;
+}
+
+.content {
+    margin-left: 40px;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Lobster', cursive;
+}
+
+.date {
+    color: #828282;
+}
+
+.save {
+    float: right;
+}
+
+.post-form textarea, .post-form input {
+    width: 100%;
+}
+
+.top-menu, .top-menu:hover, .top-menu:visited {
+    color: #ffffff;
+    float: right;
+    font-size: 26pt;
+    margin-right: 20px;
+}
+
+.post {
+    margin-bottom: 70px;
+}
+
+.post h2 a, .post h2 a:visited {
+    color: #000000;
+}
+Luego rodea el código HTML que muestra los posts con declaraciones de clases. Cambia esto:
+
+blog/templates/blog/post_list.html
+{% for post in posts %}
+    <div class="post">
+        <p>publicado: {{ post.published_date }}</p>
+        <h2><a href="">{{ post.title }}</a></h2>
+        <p>{{ post.text|linebreaksbr }}</p>
+    </div>
+{% endfor %}
+en blog/templates/blog/post_list.html por esto:
+
+blog/templates/blog/post_list.html
+<div class="content container">
+    <div class="row">
+        <div class="col-md-8">
+            {% for post in posts %}
+                <div class="post">
+                    <div class="date">
+                        <p>publicado: {{ post.published_date }}</p>
+                    </div>
+                    <h2><a href="">{{ post.title }}</a></h2>
+                    <p>{{ post.text|linebreaksbr }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+Guarda estos archivos y recarga tu sitio.
